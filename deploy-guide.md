@@ -230,7 +230,7 @@ mkdir -p /home/helpdesk/app/logs
 ### 3. Iniciar Aplicação
 ```bash
 cd /home/helpdesk/app
-pm2 start ecosystem.config.js
+pm2 start ecosystem.config.cjs
 pm2 save
 pm2 startup
 ```
