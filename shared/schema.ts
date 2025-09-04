@@ -5,12 +5,12 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: uuid("id").primaryKey().defaultRandom(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   name: text("name").notNull(),
   email: text("email"),
-  role: text("role").notNull().default("technician"), // 'technician' or 'admin'
+  role: text("role").notNull().default("technician"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -34,8 +34,8 @@ export const tickets = pgTable("tickets", {
 });
 
 export const comments = pgTable("comments", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  ticketId: varchar("ticket_id").references(() => tickets.id, { onDelete: "cascade" }).notNull(),
+  id: uuid("id").primaryKey().defaultRandom(),
+  ticketId: uuid("ticket_id").references(() => tickets.id, { onDelete: "cascade" }).notNull(),
   content: text("content").notNull(),
   authorName: text("author_name").notNull(),
   authorType: text("author_type").notNull(), // 'user', 'technician'
